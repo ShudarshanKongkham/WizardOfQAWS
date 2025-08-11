@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Wizard - Interactive Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #videoElement {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 200px;
+            height: 150px;
+            border: 3px solid #fff;
+            border-radius: 10px;
+            transform: scaleX(-1);
+            z-index: 10;
+        }
+
+        #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.1);
+            cursor: none;
+        }
+
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            z-index: 10;
+            font-size: 18px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            z-index: 10;
+            font-size: 14px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            max-width: 300px;
+        }
+
+        .spell-effect {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: spellCast 1s ease-out forwards;
+        }
+
+        @keyframes spellCast {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        #startButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 40px;
+            font-size: 24px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        #startButton:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <button id="startButton">🧙♂️ Start Hand Wizard</button>
+        <video id="videoElement" autoplay muted playsinline style="display: none;"></video>
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="ui">
+            <div>Score: <span id="score">0</span></div>
+            <div>Level: <span id="level">1</span></div>
+            <div>Coins: <span id="coins">0</span> 🪙</div>
+            <div>Combo: <span id="combo">0</span>x</div>
+            <div>Gesture: <span id="currentGesture">None</span></div>
+        </div>
+
+        <div id="instructions">
+            <strong>Controls:</strong><br>
+            ✋ Open Hand - 🔥 Fire (vs Ice enemies)<br>
+            ✊ Closed Fist - ❄️ Ice (vs Fire enemies)<br>
+            👆 Point Up - ⚡ Lightning (vs Earth enemies)<br>
+            ✌️ Peace Sign - 🌿 Nature (vs Lightning enemies)<br>
+            Match spell types for bonus damage!
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
