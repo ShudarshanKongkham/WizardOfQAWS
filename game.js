@@ -304,15 +304,12 @@ class HandWizardGame {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Draw hand cursor
+        // Draw wizard cursor
         if (this.handPosition.x && this.handPosition.y) {
-            this.ctx.beginPath();
-            this.ctx.arc(this.handPosition.x, this.handPosition.y, 15, 0, Math.PI * 2);
-            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-            this.ctx.fill();
-            this.ctx.strokeStyle = '#fff';
-            this.ctx.lineWidth = 3;
-            this.ctx.stroke();
+            this.ctx.font = '32px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText('🧙‍♂️', this.handPosition.x, this.handPosition.y);
         }
         
         // Draw spells
